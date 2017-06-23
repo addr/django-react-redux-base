@@ -16,6 +16,8 @@ DATABASES = {
     }
 }
 
+ALLOWED_HOSTS += ['localhost']
+
 REST_FRAMEWORK['EXCEPTION_HANDLER'] = 'django_rest_logger.handlers.rest_exception_handler'  # NOQA (ignore all errors on this line)
 
 LOGGING = {
