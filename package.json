@@ -1,7 +1,7 @@
 {
-  "name": "django-react-redux-base",
+  "name": "starfish-feedback",
   "version": "1.0.0",
-  "description": "Django, React and Redux!",
+  "description": "Prototype for starfish feedback app for Hobsons hackathon.",
   "scripts": {
     "dev": "webpack --progress --display-error-details --config webpack/common.config.js --watch",
     "prod": "webpack --progress -p --config webpack/common.config.js",
