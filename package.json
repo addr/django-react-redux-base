@@ -65,6 +65,8 @@
     "redux-thunk": "2.2.0",
     "resolve-url-loader": "2.0.2",
     "sass-loader": "4.1.0",
+    "semantic-ui-css": "^2.2.10",
+    "semantic-ui-react": "^0.70.0",
     "style-loader": "0.13.2",
     "tcomb-form": "0.9.13",
     "url-loader": "0.5.8",
