@@ -28,10 +28,15 @@ from io import TextIOWrapper
 
 import json
 
+from twilio.rest import Client
+
 import csv
 
 # In forms.py...
 from django import forms
+
+account_sid = "AC326998e2f134ab17a5f17dbc38154b10"
+auth_token = "9b17270514b2f825f6c4e33186b43c57"
         
 class FeedbackCreate(GenericAPIView):
 
@@ -44,6 +49,14 @@ class FeedbackCreate(GenericAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
+
+        def send_message(student_cell_number):
+            client = Client(account_sid, auth_token)
+
+            message = client.api.account.messages.create(to="+1" + student_cell_number,
+                                                        from_="+16787265181",
+                                                        body="Hello")
+
         """User registration view."""
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
@@ -62,8 +75,25 @@ class FeedbackCreate(GenericAPIView):
                 initial_comment = serializer.data['initial_comment']
                 )
             feedback.save()
+
+            # client = Client(account_sid, auth_token)
+
+            # body = str("Hello welcome to the feedback messaging service.")
+
+            # # str_response = body.decode('utf-8')
+            # # obj = json.loads(body)
+
+            # message = client.api.account.messages.create(to="+1" + serializer.data['student_cell_number'],
+            #                                     from_="+16787265181",
+            #                                     body=body)
+            try:
+                send_message(serializer.data['student_cell_number'])
+            except TypeError:
+                print("Sent, but type error")
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # class FeedbackList(GenericAPIView):
