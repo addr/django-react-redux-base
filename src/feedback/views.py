@@ -20,7 +20,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 
 from feedback.models import Feedback
-from feedback.serializers import FeedbackSerializer
+from feedback.serializers import FeedbackSerializer, FeedbackListSerializer
 
 from lib.utils import AtomicMixin
 
@@ -40,7 +40,7 @@ class FeedbackCreate(GenericAPIView):
 
     def get(self, request):
         feedback = Feedback.objects.all()
-        serializer = FeedbackSerializer(feedback)
+        serializer = FeedbackListSerializer(feedback, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
@@ -58,11 +58,13 @@ class FeedbackCreate(GenericAPIView):
                 student_cell_number = serializer.data['student_cell_number'],
                 feedback_prompt = serializer.data['feedback_prompt'],
                 student_rating = serializer.data['student_rating'],
-                feedback_status = serializer.data['feedback_status']
+                feedback_status = serializer.data['feedback_status'],
+                initial_comment = serializer.data['initial_comment']
                 )
             feedback.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # class FeedbackList(GenericAPIView):
 #     serializer_class = FeedbackSerializer

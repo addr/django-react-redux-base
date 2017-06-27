@@ -7,7 +7,7 @@ urlpatterns = [
     url(_(r'^/$'),
         comments.views.CommentCreate.as_view(),
         name='comment_create'),
-    url(_(r'^/lookup/[0-9]{1}/$'),
+    url(_(r'^/(?P<feedback_id>[0-9]+)/$'),
         comments.views.CommentLookup.as_view(),
         name='comment_lookup'),
     # url(_(r'^/create/$'),

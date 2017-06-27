@@ -32,6 +32,7 @@ class Feedback(models.Model):
     feedback_status = models.CharField(default=False, max_length=20)
 
     #add initial comment
+    initial_comment = models.CharField(default='Initial Comment', max_length=500)
 
 
 

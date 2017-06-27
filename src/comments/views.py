@@ -51,10 +51,12 @@ class CommentLookup(GenericAPIView):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
 
-    def get(self, request):
+    def get(self, request, feedback_id=1):
         # print('feedback id' + feedback_id)
-
-        return Response(status=status.HTTP_200_OK)
+        comments = Comment.objects.filter(feedback_id=feedback_id)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # class CommentList(GenericAPIView):
 

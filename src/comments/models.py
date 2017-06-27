@@ -16,7 +16,7 @@ class Comment(models.Model):
 
     To be active, the user must register and confirm his email.
     """
-    feedback_id = models.CharField(default=uuid.uuid4, primary_key=True, max_length=50)
+    feedback_id = models.CharField(default=uuid.uuid4, max_length=50)
 
     comment = models.CharField(default='Default Comment', max_length=500)
 
