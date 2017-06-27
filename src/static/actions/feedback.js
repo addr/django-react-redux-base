@@ -7,7 +7,8 @@ import {
     FEEDBACKS_RECEIVE_DATA,
     COMMENTS_FETCH_DATA_REQUEST,
     COMMENTS_RECEIVE_DATA,
-    COMMENTS_POST_REQUEST
+    COMMENTS_POST_REQUEST,
+    FEEDBACK_FORM_POST_REQUEST
 } from '../constants';
 
 export function feedbackDataRequest() {
@@ -43,6 +44,12 @@ export function commentsReceiveData(data) {
 export function commentPostRequest() {
     return {
         type: COMMENTS_POST_REQUEST,
+    }
+}
+
+export function feedbackFormPostRequest() {
+    return {
+        type: FEEDBACK_FORM_POST_REQUEST
     }
 }
 export function getFeedbacks() {
