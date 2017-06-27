@@ -20,7 +20,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 
 from feedback.models import Feedback
-from feedback.serializers import FeedbackSerializer, FeedbackListSerializer
+from feedback.serializers import FeedbackSerializer, FeedbackListSerializer, FeedbackUpdateSerializer
 
 from lib.utils import AtomicMixin
 
@@ -60,21 +60,22 @@ class FeedbackCreate(GenericAPIView):
         """User registration view."""
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
-            feedback = Feedback(
-                student_identifier = serializer.data['student_identifier'],
-                student_name = serializer.data['student_name'],
-                event = serializer.data['event'],
-                reason = serializer.data['reason'],
-                event_end = serializer.data['event_end'],
-                event_start = serializer.data['event_start'],
-                appointment_originator = serializer.data['appointment_originator'],
-                student_cell_number = serializer.data['student_cell_number'],
-                feedback_prompt = serializer.data['feedback_prompt'],
-                student_rating = serializer.data['student_rating'],
-                feedback_status = serializer.data['feedback_status'],
-                initial_comment = serializer.data['initial_comment']
-                )
-            feedback.save()
+            # feedback = Feedback(
+            #     student_identifier = serializer.data['student_identifier'],
+            #     student_name = serializer.data['student_name'],
+            #     event = serializer.data['event'],
+            #     reason = serializer.data['reason'],
+            #     event_end = serializer.data['event_end'],
+            #     event_start = serializer.data['event_start'],
+            #     appointment_originator = serializer.data['appointment_originator'],
+            #     student_cell_number = serializer.data['student_cell_number'],
+            #     feedback_prompt = serializer.data['feedback_prompt'],
+            #     student_rating = serializer.data['student_rating'],
+            #     feedback_status = serializer.data['feedback_status'],
+            #     initial_comment = serializer.data['initial_comment']
+            #     )
+            # feedback.save()
+            serializer.save()
 
             # client = Client(account_sid, auth_token)
 

@@ -36,6 +36,8 @@ class Feedback(models.Model):
     #add initial comment
     initial_comment = models.CharField(default='Initial Comment', max_length=500)
 
+    search_feedback_id = models.CharField(default='1', max_length=20)
+
 
 
     # GENDER_CHOICES = (
