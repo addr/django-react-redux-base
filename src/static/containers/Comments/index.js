@@ -34,6 +34,7 @@ class CommentView extends React.Component {
         isFetching: React.PropTypes.bool.isRequired,
         data: React.PropTypes.array,
         token: React.PropTypes.string,
+        isAuthenticated: React.PropTypes.bool,
         actions: React.PropTypes.shape({
             getComments: React.PropTypes.func.isRequired,
             postComment: React.PropTypes.func.isRequired
@@ -55,13 +56,15 @@ class CommentView extends React.Component {
 
     addComment(e) {
         e.preventDefault();
+        const token = this.props.token;
+        console.log(`Token: ${token}`);
         const commentObject = {
             feedback_id: this.props.params.feedbackID,
             comment: this.state.comment,
             author_id: 1,
             author_name: 'John Q. Professor',
-        }
-        this.props.actions.postComment(commentObject, this.props.token);
+        };
+        this.props.actions.postComment(commentObject, token);
     }
 
     onTextChange(e) {

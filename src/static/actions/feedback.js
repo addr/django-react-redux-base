@@ -80,9 +80,9 @@ export function postComment(comment, token) {
             method: 'post',
             body: JSON.stringify(comment),
             headers: {
-                Authorization: `Token ${token}`,
-                Content-Type: 'application/json',
-                Accept: 'application/json'
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         })
         .then(checkHttpStatus)
