@@ -64,6 +64,14 @@ class CommentReply(GenericAPIView):
     queryset = Comment.objects.all()
 
     def post(self, request):
+
+        def send_message(cell_number, body):
+            client = Client(account_sid, auth_token)
+
+            message = client.api.account.messages.create(to=cell_number,
+                                                        from_="+16787265181",
+                                                        body=body)
+
         print('Body' + request.data['Body'])
         print ('From ' + request.data['From'])
 
@@ -85,8 +93,10 @@ class CommentReply(GenericAPIView):
         if from_ == feed[0].student_cell_number:
             print('student')
             author_name = feed[0].student_name
+            send_message(from_, body)
         else:
             author_name = feed[0].appointment_originator
+            send_message(from_, body)
             print('advisor')
 
         comment = Comment(feedback_id=feedback_id, comment=comment, author_name=author_name)

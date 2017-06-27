@@ -65,7 +65,7 @@ class FeedbackUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Feedback
-        fields = ('search_feedback_id', 'student_rating', 'initial_comment')
+        fields = ('search_feedback_id', 'student_rating', 'initial_comment', 'feedback_status')
 
     def create(self, validated_data):
         """
