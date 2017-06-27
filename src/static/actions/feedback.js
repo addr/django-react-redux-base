@@ -1,4 +1,3 @@
-
 import fetch from 'isomorphic-fetch';
 import { push } from 'react-router-redux';
 import { SERVER_URL } from '../utils/config';
@@ -105,22 +104,30 @@ export function getComments(feedbackID) {
             })
             .catch((error) => {
                 console.log(`Error getting data: ${error.response}`)
-                // if (error && typeof error.response !== 'undefined' && error.response.status === 401) {
-                //     // Invalid authentication credentials
-                //     return error.response.json().then((data) => {
-                //         dispatch(authLoginUserFailure(401, data.non_field_errors[0]));
-                //         dispatch(push('/login'));
-                //     });
-                // } else if (error && typeof error.response !== 'undefined' && error.response.status >= 500) {
-                //     // Server side error
-                //     dispatch(authLoginUserFailure(500, 'A server error occurred while sending your data!'));
-                // } else {
-                //     // Most likely connection issues
-                //     dispatch(authLoginUserFailure('Connection Error', 'An error occurred while sending your data!'));
-                // }
-                //
-                // dispatch(push('/login'));
                 return Promise.resolve(); // TODO: we need a promise here because of the tests, find a better way
             });
     };
 }
+
+// export function postComment(comment) {
+//     return (dispatch) => {
+//         dispatch(commentPostRequest());
+//         return fetch(`${SERVER_URL}/api/v1/comments/`, {
+//             method: 'post',
+//             body: JSON.stringify(comment),
+//             headers: {
+//                 "Content-Type": 'application/json',
+//                 "Accept": 'application/json'
+//             }
+//         })
+//         .then(checkHttpStatus)
+//         .then(parseJSON)
+//         .then((response) => {
+//             dispatch(getComments(comment.feedback_id))
+//         })
+//         .catch((error) => {
+//             console.log(`Error fetching comments: ${JSON.stringify(error)}`);
+//             return Promise.resolve(); // TODO: we need a promise here because of the tests, find a better way
+//         });
+//     };
+// }
