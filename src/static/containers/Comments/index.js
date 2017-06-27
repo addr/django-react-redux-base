@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { Button, Comment, Form, Header } from 'semantic-ui-react';
 
 const FeedbackComment = ({author, commentText, commentDate}) => {

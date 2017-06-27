@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './app';
-import { HomeView, LoginView, ProtectedView, NotFoundView, FeedbackView, CommentView } from './containers';
+import { HomeView, LoginView, ProtectedView, NotFoundView, FeedbackView, CommentView, FeedbackPrompt, ThankYouView } from './containers';
 import requireAuthentication from './utils/requireAuthentication';
 
 // export default(
@@ -17,6 +17,8 @@ export default (
     <Route path="/" component={App}>
         <IndexRoute component={FeedbackView} />
         <Route path="comments" component={CommentView} />
+        <Route path="feedback-prompt" component={FeedbackPrompt} />
+        <Route path="thank-you" component={ThankYouView} />
         <Route path="*" component={NotFoundView} />
     </Route>
 )

@@ -24,7 +24,9 @@ const FeedbackCard = ({title, date, comment, student_name, rating, ...props}) =>
                         <Link to="comments">
                             <Button basic color='green'>Reply</Button>
                         </Link>
-                        <Button basic color='red'>Archive</Button>
+                        <Link to="comments">
+                            <Button basic color='red'>Archive</Button>
+                        </Link>
                     </div>
                 </Card.Content>
             </Card>
