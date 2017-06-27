@@ -66,8 +66,16 @@ class CommentReply(GenericAPIView):
         print ('From ' + request.data['From'])
 
         body = request.data['Body']
-        split_bod = body.split(' ')
+        split_bod = body.split('\n')
         feedback_id = split_bod[0]
+        comment = split_bod[1]
+
+        feed = Feedback.objects.filter(feedback_id=feedback_id)
+        if len(feed) == 0:
+            print('no existe')
+        originator = feed[0].appointment_originator
+
+        print (originator)
 
         print(feedback_id)
 
