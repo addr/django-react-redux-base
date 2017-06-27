@@ -54,7 +54,7 @@ class CommentCreate(GenericAPIView):
         # print(request.user.email)
         user = User.objects.get(email=request.user.email)
         if serializer.is_valid():
-            comment = Comment(feedback_id=serializer.data['feedback_id'], comment=serializer.data['comment'], author_name=user.first_name + ' ' user.last_name)
+            comment = Comment(feedback_id=serializer.data['feedback_id'], comment=serializer.data['comment'], author_name=user.first_name + ' ' + user.last_name)
             comment.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
