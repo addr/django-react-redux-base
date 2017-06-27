@@ -22,6 +22,8 @@ from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from comments.models import Comment
 from comments.serializers import CommentSerializer
 
+from feedback.models import Feedback
+
 from lib.utils import AtomicMixin
 
 from io import TextIOWrapper
