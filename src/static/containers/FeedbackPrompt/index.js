@@ -10,7 +10,8 @@ class FeedbackPrompt extends React.Component {
         isFetching: React.PropTypes.bool.isRequired,
         data: React.PropTypes.array,
         actions: React.PropTypes.shape({
-            getFeedbacks: React.PropTypes.func.isRequired
+            getFeedbacks: React.PropTypes.func.isRequired,
+            postFeedbackPrompt: React.PropTypes.func.isRequired
         }).isRequired
     };
 
@@ -18,16 +19,33 @@ class FeedbackPrompt extends React.Component {
         super(props);
         this.state = {
             prompt: '',
-            rating: 0
+            rating: 0,
+            comment: ''
         };
 
         this.selectRating = this.selectRating.bind(this);
+        this.submitRating = this.submitRating.bind(this);
+        this.onCommentChange = this.onCommentChange.bind(this);
     }
 
     selectRating(e, { value }) {
-        console.log(`Setting rating to ${value}`);
         e.preventDefault();
         this.setState({ rating: value });
+    }
+
+    onCommentChange(e) {
+        e.preventDefault();
+        this.setState({ comment: e.target.value });
+    }
+
+    submitRating(e) {
+        e.preventDefault();
+        const rating = {
+            search_feedback_id: this.props.params.feedbackID,
+            student_rating: this.state.rating,
+            initial_comment: this.state.comment
+        }
+        this.props.actions.postFeedbackPrompt(rating);
     }
 
     componentWillMount() {
@@ -57,7 +75,8 @@ class FeedbackPrompt extends React.Component {
                 </Header>
                 <Form>
                     <Form.TextArea
-                        placeholder='Example: "Thank you for the advising help!"' />
+                        placeholder='Example: "Thank you for the advising help!"'
+                        onChange={this.onCommentChange}/>
                     <Container textAlign='center'>
                         <Form.Group inline>
                             <Form.Radio
@@ -76,7 +95,10 @@ class FeedbackPrompt extends React.Component {
                                 checked={rating === '3'}
                                 onChange={this.selectRating} />
                         </Form.Group>
-                        <Form.Button>Submit</Form.Button>
+                        <Form.Button
+                            onClick={this.submitRating}>
+                            Submit
+                        </Form.Button>
                     </Container>
                 </Form>
         </Container>
