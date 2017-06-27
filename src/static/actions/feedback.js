@@ -109,25 +109,25 @@ export function getComments(feedbackID) {
     };
 }
 
-// export function postComment(comment) {
-//     return (dispatch) => {
-//         dispatch(commentPostRequest());
-//         return fetch(`${SERVER_URL}/api/v1/comments/`, {
-//             method: 'post',
-//             body: JSON.stringify(comment),
-//             headers: {
-//                 "Content-Type": 'application/json',
-//                 "Accept": 'application/json'
-//             }
-//         })
-//         .then(checkHttpStatus)
-//         .then(parseJSON)
-//         .then((response) => {
-//             dispatch(getComments(comment.feedback_id))
-//         })
-//         .catch((error) => {
-//             console.log(`Error fetching comments: ${JSON.stringify(error)}`);
-//             return Promise.resolve(); // TODO: we need a promise here because of the tests, find a better way
-//         });
-//     };
-// }
+export function postFeedbackPrompt(comment) {
+    return (dispatch) => {
+        dispatch(commentPostRequest());
+        return fetch(`${SERVER_URL}/api/v1/comments/`, {
+            method: 'post',
+            body: JSON.stringify(comment),
+            headers: {
+                "Content-Type": 'application/json',
+                "Accept": 'application/json'
+            }
+        })
+        .then(checkHttpStatus)
+        .then(parseJSON)
+        .then((response) => {
+            dispatch(getComments(comment.feedback_id))
+        })
+        .catch((error) => {
+            console.log(`Error fetching comments: ${JSON.stringify(error)}`);
+            return Promise.resolve(); // TODO: we need a promise here because of the tests, find a better way
+        });
+    };
+}
