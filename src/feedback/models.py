@@ -23,7 +23,7 @@ class Feedback(models.Model):
     reason = models.CharField(default='Advising', max_length=50)
     event_end = models.DateTimeField(default=timezone.now)
     event_start = models.DateTimeField(default=timezone.now)
-    appointment_originator = models.CharField(default='810xxxxxx', max_length=20)
+    appointment_originator = models.CharField(default='Plain Advisor', max_length=20)
     student_cell_number = models.CharField(default='555-555-5555', max_length=15)
     feedback_prompt = models.CharField(default='How was your appointment?', max_length=100)
     

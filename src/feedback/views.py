@@ -102,7 +102,7 @@ class FeedbackUpdate(GenericAPIView):
     def post(self, request):
         serializer = FeedbackUpdateSerializer(request.data)
         if serializer.is_valid():
-            feedback = Feedback.objects.filter(feedback_id=serializer.data['feedback_id'])
+            feedback = Feedback.objects.filter(feedback_id=serializer.data['search_feedback_id'])
             feedback[0].initial_comment = serializer.data['initial_comment']
             feedback[0].student_rating = serializer.data['student_rating']
             feedback[0].save()

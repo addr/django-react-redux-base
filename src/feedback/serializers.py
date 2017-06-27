@@ -15,7 +15,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Feedback
-        fields = ('feedback_id', 'student_identifier', 'student_name', 'event', 'reason', 'event_end', 'event_start', 'appointment_originator', 'student_cell_number', 'feedback_prompt', 'student_rating', 'feedback_status', 'initial_comment')
+        fields = ('feedback_id', 'student_identifier', 'student_name', 'event', 'reason', 'event_end', 'event_start', 'appointment_originator', 'student_cell_number', 'feedback_prompt', 'student_rating', 'feedback_status', 'initial_comment', 'advisor_cell_number')
 
     def create(self, validated_data):
         """
@@ -40,7 +40,7 @@ class FeedbackListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Feedback
-        fields = ('feedback_id', 'student_identifier', 'student_name', 'event', 'reason', 'event_end', 'event_start', 'appointment_originator', 'student_cell_number', 'feedback_prompt', 'student_rating', 'feedback_status', 'feedback_time_stamp', 'initial_comment')
+        fields = ('feedback_id', 'student_identifier', 'student_name', 'event', 'reason', 'event_end', 'event_start', 'appointment_originator', 'student_cell_number', 'feedback_prompt', 'student_rating', 'feedback_status', 'feedback_time_stamp', 'initial_comment', 'advisor_cell_number')
 
     def create(self, validated_data):
         """
