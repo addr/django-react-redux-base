@@ -94,6 +94,19 @@ class FeedbackCreate(GenericAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class FeedbackUpdate(GenericAPIView):
+    serializer_class = FeedbackUpdateSerializer
+    queryset = Feedback.objects.all()
+
+    def post(self, request):
+        serializer = FeedbackUpdateSerializer(request.data)
+        if serializer.is_valid():
+            feedback = Feedback.objects.filter(feedback_id=serializer.data['feedback_id'])
+            feedback[0].initial_comment = serializer.data['initial_comment']
+            feedback[0].student_rating = serializer.data['student_rating']
+            feedback[0].save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class FeedbackList(GenericAPIView):
