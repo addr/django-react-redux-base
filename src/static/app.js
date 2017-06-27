@@ -46,11 +46,23 @@ class App extends React.Component {
             <div>
                 <Menu>
                     <Menu.Item
-                        name="Home">
+                        name="Home"
+                        onClick={this.goToIndex}>
                         Home
                     </Menu.Item>
+                    <Link to="/login">
+                        <Menu.Item
+                            name="Login">
+                            Login
+                        </Menu.Item>
+                    </Link>
+                    <Menu.Item
+                        name="Logout"
+                        onClick={this.logout}>
+                        Logout
+                    </Menu.Item>
                 </Menu>
-                <Container text-align='center'>
+                    <Container text-align='center'>
                     <div>
                         {this.props.children}
                     </div>
