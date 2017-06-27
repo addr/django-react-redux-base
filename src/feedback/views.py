@@ -104,9 +104,11 @@ class FeedbackUpdate(GenericAPIView):
         if serializer.is_valid():
             feedback = Feedback.objects.filter(feedback_id=serializer.data['search_feedback_id'])
             print(feedback[0])
+            print(serializer.data['initial_comment'])
+            print(serializer.data['student_rating'])
             feedback[0].initial_comment = serializer.data['initial_comment']
             feedback[0].student_rating = serializer.data['student_rating']
-            feedback[0].update()
+            feedback[0].save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
