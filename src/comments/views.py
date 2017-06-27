@@ -50,7 +50,7 @@ class CommentCreate(GenericAPIView):
     def post(self, request):
         """User registration view."""
         serializer = CommentSerializer(data=request.data)
-        print(request.user.username)
+        print(request.user.email)
         if serializer.is_valid():
             comment = Comment(feedback_id=serializer.data['feedback_id'], comment=serializer.data['comment'], author_id=serializer.data['author_id'], author_name=serializer.data['author_name'])
             comment.save()
