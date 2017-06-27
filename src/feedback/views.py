@@ -100,7 +100,7 @@ class FeedbackUpdate(GenericAPIView):
     queryset = Feedback.objects.all()
 
     def post(self, request):
-        serializer = FeedbackUpdateSerializer(request.data)
+        serializer = FeedbackUpdateSerializer(data=request.data)
         if serializer.is_valid():
             feedback = Feedback.objects.filter(feedback_id=serializer.data['search_feedback_id'])
             feedback[0].initial_comment = serializer.data['initial_comment']
