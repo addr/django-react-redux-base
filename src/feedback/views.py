@@ -53,7 +53,7 @@ class FeedbackCreate(GenericAPIView):
         def send_message(student_cell_number):
             client = Client(account_sid, auth_token)
 
-            message = client.api.account.messages.create(to="+1" + student_cell_number,
+            message = client.api.account.messages.create(to=student_cell_number,
                                                         from_="+16787265181",
                                                         body="Hello")
 
