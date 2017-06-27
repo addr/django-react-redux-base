@@ -75,7 +75,7 @@ class CommentReply(GenericAPIView):
 
             message = client.api.account.messages.create(to=cell_number,
                                                         from_="+16787265181",
-                                                        body=body)
+                                                        body='Feedback ID Number :' + body)
 
         print('Body' + request.data['Body'])
         print ('From ' + request.data['From'])
@@ -83,7 +83,7 @@ class CommentReply(GenericAPIView):
         from_ = request.data['From']
         body = request.data['Body']
         split_bod = body.split('\n')
-        feedback_id = split_bod[0]
+        feedback_id = split_bod[0].trim()
         comment = split_bod[1]
 
         feed = Feedback.objects.filter(feedback_id=feedback_id)
