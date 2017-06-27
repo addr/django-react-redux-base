@@ -1,5 +1,5 @@
 import { createReducer } from '../utils';
-import { FEEDBACKS_FETCH_DATA_REQUEST, FEEDBACKS_RECEIVE_DATA, COMMENTS_FETCH_DATA_REQUEST, COMMENTS_RECEIVE_DATA } from '../constants';
+import { FEEDBACKS_FETCH_DATA_REQUEST, FEEDBACKS_RECEIVE_DATA, COMMENTS_FETCH_DATA_REQUEST, COMMENTS_RECEIVE_DATA, COMMENTS_POST_REQUEST } from '../constants';
 
 const initialState = {
     feedbacks: [],
@@ -15,8 +15,8 @@ export default createReducer(initialState, {
     },
     [FEEDBACKS_RECEIVE_DATA]: (state, payload) => {
         return Object.assign({}, state, {
-            isFetching: false,
-            feedbacks: payload.data
+            feedbacks: payload.data,
+            isFetching: false
         });
     },
     [COMMENTS_FETCH_DATA_REQUEST]: (state, payload) => {
@@ -26,8 +26,28 @@ export default createReducer(initialState, {
     },
     [COMMENTS_RECEIVE_DATA]: (state, payload) => {
         return Object.assign({}, state, {
-            isFetching: false,
-            comments: payload.data
+            comments: payload.data,
+            isFetching: false
         });
-    }
+    },
+    [COMMENTS_POST_REQUEST]: (state, payload) => {
+        return Object.assign({}, state, {
+            isFetching: true
+        });
+    },
+    [FEEDBACK_FORM_REQUEST]: (state, payload) => {
+        return Object.assign({}, state, {
+            isFetching: true
+        });
+    },
+    [FEEDBACK_FORM_RECEIVE]: (state, payload) => {
+        return Object.assign({}, state, {
+            isFetching: false
+        });
+    },
+    [FEEDBACK_FORM_POST_REQUEST]: (state, payload) => {
+        return Object.assign({}, state, {
+            isFetching: true
+        });
+    },
 });

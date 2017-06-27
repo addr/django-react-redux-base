@@ -16,9 +16,9 @@ import requireAuthentication from './utils/requireAuthentication';
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={FeedbackView} />
-        <Route path="comments" component={CommentView} />
-        <Route path="feedback-prompt" component={FeedbackPrompt} />
-        <Route path="thank-you" component={ThankYouView} />
+        <Route path="/feedback/:feedbackID/comments" component={CommentView} />
+        <Route path="/feedback/:feedbackID/feedback-prompt" component={FeedbackPrompt} />
+        <Route path="/feedback/:feedbackID/thank-you" component={ThankYouView} />
         <Route path="*" component={NotFoundView} />
     </Route>
 )

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/feedback';
 import { Header, Container, Card, Icon, Image, Button, Rating } from 'semantic-ui-react'
 
-const FeedbackCard = ({title, date, comment, student_name, rating, ...props}) =>  {
+const FeedbackCard = ({title, date, comment, student_name, rating, feedback_id, ...props}) =>  {
     return (
         <Card fluid>
                 <Card.Content>
@@ -24,10 +24,10 @@ const FeedbackCard = ({title, date, comment, student_name, rating, ...props}) =>
                 </Card.Content>
                 <Card.Content extra>
                     <div className='ui two buttons'>
-                        <Link to="comments">
+                        <Link to={`/feedback/${feedback_id}/comments`}>
                             <Button basic color='green'>Reply</Button>
                         </Link>
-                        <Link to="comments">
+                        <Link to={`/feedback/${feedback_id}/comments`}>
                             <Button basic color='red'>Archive</Button>
                         </Link>
                     </div>
@@ -51,6 +51,17 @@ class FeedbackView extends React.Component {
     }
 
     render() {
+        let feedbacks = this.props.data;
+        if (feedbacks) {
+            feedbacks = this.props.data.map(feedback => (
+                <FeedbackCard
+                    title={feedback.reason}
+                    date={feedback.feedback_time_stamp}
+                    student_name={feedback.student_name}
+                    feedback_id={feedback.feedback_id}
+                    comment={feedback.initial_comment} />
+            ))
+        }
         return (
             <div>
                 { this.props.isFetching ?
@@ -59,20 +70,11 @@ class FeedbackView extends React.Component {
                     </Container>
                     :
                     <Card.Group>
-                        // <FeedbackCard
-                        //     title="Advising appointment feedback"
-                        //     date="2017-06-26"
-                        //     student_name="John Doe"
-                        //     comment="My advising appointment was terrible!" />
-                        // <FeedbackCard
-                        //     title="Advising appointment feedback"
-                        //     date="2017-05-01"
-                        //     student_name="Jane Doe"
-                        //     comment="My advising appointment was great!" />
+                        {feedbacks}
                     </Card.Group>
                 }
             </div>
-                    )
+        )
     }
 }
 

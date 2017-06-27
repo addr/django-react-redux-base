@@ -7,7 +7,8 @@ import {
     FEEDBACKS_FETCH_DATA_REQUEST,
     FEEDBACKS_RECEIVE_DATA,
     COMMENTS_FETCH_DATA_REQUEST,
-    COMMENTS_RECEIVE_DATA
+    COMMENTS_RECEIVE_DATA,
+    COMMENTS_POST_REQUEST
 } from '../constants';
 
 export function feedbackDataRequest() {
@@ -40,46 +41,58 @@ export function commentsReceiveData(data) {
     };
 }
 
+export function commentPostRequest() {
+    return {
+        type: COMMENTS_POST_REQUEST,
+    }
+}
 export function getFeedbacks() {
     return (dispatch, state) => {
         dispatch(feedbackDataRequest());
         return fetch(`${SERVER_URL}/api/v1/feedback/`, {
-            // headers: {
-            //     Accept: 'application/json',
-            //     Authorization: `Token ${token}`
-            // }
+            headers: {
+                Accept: 'application/json'
+            }
         })
             .then(checkHttpStatus)
             .then(parseJSON)
             .then((response) => {
-                dispatch(feedbacksReceiveData(response.data));
+                dispatch(feedbacksReceiveData(response));
             })
             .catch((error) => {
-                console.log(`Error getting data: ${error.response}`)
-                // if (error && typeof error.response !== 'undefined' && error.response.status === 401) {
-                //     // Invalid authentication credentials
-                //     return error.response.json().then((data) => {
-                //         dispatch(authLoginUserFailure(401, data.non_field_errors[0]));
-                //         dispatch(push('/login'));
-                //     });
-                // } else if (error && typeof error.response !== 'undefined' && error.response.status >= 500) {
-                //     // Server side error
-                //     dispatch(authLoginUserFailure(500, 'A server error occurred while sending your data!'));
-                // } else {
-                //     // Most likely connection issues
-                //     dispatch(authLoginUserFailure('Connection Error', 'An error occurred while sending your data!'));
-                // }
-                //
-                // dispatch(push('/login'));
+                console.log(`Error getting data: ${error}`)
                 return Promise.resolve(); // TODO: we need a promise here because of the tests, find a better way
             });
     };
 }
 
-export function getComments() {
+export function postComment(comment) {
+    return (dispatch) => {
+        dispatch(commentPostRequest());
+        return fetch(`${SERVER_URL}/api/v1/comments/`, {
+            method: 'post',
+            body: JSON.stringify(comment),
+            headers: {
+                "Content-Type": 'application/json',
+                "Accept": 'application/json'
+            }
+        })
+        .then(checkHttpStatus)
+        .then(parseJSON)
+        .then((response) => {
+            dispatch(getComments(comment.feedback_id))
+        })
+        .catch((error) => {
+            console.log(`Error fetching comments: ${JSON.stringify(error)}`);
+            return Promise.resolve(); // TODO: we need a promise here because of the tests, find a better way
+        });
+    };
+}
+
+export function getComments(feedbackID) {
     return (dispatch, state) => {
         dispatch(commentsDataRequest());
-        return fetch(`${SERVER_URL}/api/v1/feedback/`, {
+        return fetch(`${SERVER_URL}/api/v1/comments/${feedbackID}/`, {
             // headers: {
             //     Accept: 'application/json',
             //     Authorization: `Token ${token}`
@@ -88,7 +101,7 @@ export function getComments() {
             .then(checkHttpStatus)
             .then(parseJSON)
             .then((response) => {
-                dispatch(commentsReceiveData(response.data));
+                dispatch(commentsReceiveData(response));
             })
             .catch((error) => {
                 console.log(`Error getting data: ${error.response}`)
