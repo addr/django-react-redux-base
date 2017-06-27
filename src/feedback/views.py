@@ -47,21 +47,22 @@ class FeedbackCreate(GenericAPIView):
         """User registration view."""
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
-            feedback = Feedback(
-                student_identifier = serializer.data['student_identifier'],
-                student_name = serializer.data['student_name'],
-                event = serializer.data['event'],
-                reason = serializer.data['reason'],
-                event_end = serializer.data['event_end'],
-                event_start = serializer.data['event_start'],
-                appointment_originator = serializer.data['appointment_originator'],
-                student_cell_number = serializer.data['student_cell_number'],
-                feedback_prompt = serializer.data['feedback_prompt'],
-                student_rating = serializer.data['student_rating'],
-                feedback_status = serializer.data['feedback_status'],
-                initial_comment = serializer.data['initial_comment']
-                )
-            feedback.save()
+            # feedback = Feedback(
+            #     student_identifier = serializer.data['student_identifier'],
+            #     student_name = serializer.data['student_name'],
+            #     event = serializer.data['event'],
+            #     reason = serializer.data['reason'],
+            #     event_end = serializer.data['event_end'],
+            #     event_start = serializer.data['event_start'],
+            #     appointment_originator = serializer.data['appointment_originator'],
+            #     student_cell_number = serializer.data['student_cell_number'],
+            #     feedback_prompt = serializer.data['feedback_prompt'],
+            #     student_rating = serializer.data['student_rating'],
+            #     feedback_status = serializer.data['feedback_status'],
+            #     initial_comment = serializer.data['initial_comment']
+            #     )
+            # feedback.save()
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

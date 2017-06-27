@@ -27,7 +27,7 @@ class Feedback(models.Model):
     student_cell_number = models.CharField(default='555-555-5555', max_length=15)
     feedback_prompt = models.CharField(default='How was your appointment?', max_length=100)
     
-    student_rating = models.CharField(default='3', max_length=5)
+    student_rating = models.CharField(default='0', max_length=5)
     feedback_time_stamp = models.DateTimeField(default=timezone.now)
     feedback_status = models.CharField(default=False, max_length=20)
 
