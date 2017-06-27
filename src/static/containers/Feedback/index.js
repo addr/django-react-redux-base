@@ -3,20 +3,25 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/feedback';
-import { Header, Container, Card, Icon, Image, Button, Rating } from 'semantic-ui-react'
+import { Segment, Label, Header, Container, Card, Icon, Image, Button, Rating } from 'semantic-ui-react'
 
-const FeedbackCard = ({title, date, comment, student_name, rating, feedback_id, ...props}) =>  {
+const FeedbackCard = ({title, date, comment, student_name, rating, feedback_id, status, ...props}) =>  {
     return (
         <Card fluid>
                 <Card.Content>
                     <Card.Header>
+                        <Label as='a' color='orange' ribbon='right'>{status}</Label>
                         {title} ({date})
                     </Card.Header>
                     <Card.Meta>
                         {student_name}
                     </Card.Meta>
                     <Card.Description>
-                        {comment}
+                        {comment !== 'Initial Comment' ?
+                            comment
+                        :
+                            'Awaiting student feedback...'
+                        }
                         <div>
                             <Rating icon='star' defaultRating={1} maxRating={5}  />
                         </div>
@@ -59,7 +64,8 @@ class FeedbackView extends React.Component {
                     date={feedback.feedback_time_stamp}
                     student_name={feedback.student_name}
                     feedback_id={feedback.feedback_id}
-                    comment={feedback.initial_comment} />
+                    comment={feedback.initial_comment}
+                    status={feedback.feedback_status} />
             ))
         }
         return (

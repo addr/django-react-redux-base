@@ -52,6 +52,7 @@ export function feedbackFormPostRequest() {
         type: FEEDBACK_FORM_POST_REQUEST
     }
 }
+
 export function getFeedbacks() {
     return (dispatch, state) => {
         dispatch(feedbackDataRequest());
@@ -116,12 +117,12 @@ export function getComments(feedbackID) {
     };
 }
 
-export function postFeedbackPrompt(comment) {
+export function postFeedbackPrompt(rating) {
     return (dispatch) => {
-        dispatch(commentPostRequest());
-        return fetch(`${SERVER_URL}/api/v1/comments/`, {
+        dispatch(feedbackFormPostRequest());
+        return fetch(`${SERVER_URL}/api/v1/feedback/update/`, {
             method: 'post',
-            body: JSON.stringify(comment),
+            body: JSON.stringify(rating),
             headers: {
                 "Content-Type": 'application/json',
                 "Accept": 'application/json'
@@ -130,7 +131,8 @@ export function postFeedbackPrompt(comment) {
         .then(checkHttpStatus)
         .then(parseJSON)
         .then((response) => {
-            dispatch(getComments(comment.feedback_id))
+            dispatch(getComments(rating.search_feedback_id));
+            dispatch(push(`/feedback/${rating.search_feedback_id}/thank-you`));
         })
         .catch((error) => {
             console.log(`Error fetching comments: ${JSON.stringify(error)}`);
