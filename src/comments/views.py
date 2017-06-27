@@ -36,6 +36,9 @@ import csv
 
 # In forms.py...
 from django import forms
+
+account_sid = "AC326998e2f134ab17a5f17dbc38154b10"
+auth_token = "9b17270514b2f825f6c4e33186b43c57"
         
 class CommentCreate(GenericAPIView):
 
