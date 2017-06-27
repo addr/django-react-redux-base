@@ -64,6 +64,13 @@ class CommentReply(GenericAPIView):
     def post(self, request):
         print('Body' + request.data['Body'])
         print ('From ' + request.data['From'])
+
+        body = request.data['Body']
+        split_bod = body.split(' ')
+        feedback_id = split_bod[0]
+
+        print(feedback_id)
+
         return Response(status=status.HTTP_200_OK)
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
