@@ -62,7 +62,8 @@ class CommentReply(GenericAPIView):
     queryset = Comment.objects.all()
 
     def post(self, request):
-        print(request.data)
+        print('Body' + request.data['body'])
+        print ('From ' + request.data['from'])
         return Response(status=status.HTTP_200_OK)
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
