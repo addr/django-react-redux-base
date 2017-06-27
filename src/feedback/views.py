@@ -20,7 +20,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 
 from feedback.models import Feedback
-from feedback.serializers import FeedbackSerializer, FeedbackListSerializer
+from feedback.serializers import FeedbackSerializer, FeedbackListSerializer, FeedbackUpdateSerializer
 
 from lib.utils import AtomicMixin
 
@@ -28,10 +28,15 @@ from io import TextIOWrapper
 
 import json
 
+from twilio.rest import Client
+
 import csv
 
 # In forms.py...
 from django import forms
+
+account_sid = "AC326998e2f134ab17a5f17dbc38154b10"
+auth_token = "9b17270514b2f825f6c4e33186b43c57"
         
 class FeedbackCreate(GenericAPIView):
 
@@ -44,6 +49,14 @@ class FeedbackCreate(GenericAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
+
+        def send_message(student_cell_number):
+            client = Client(account_sid, auth_token)
+
+            message = client.api.account.messages.create(to="+1" + student_cell_number,
+                                                        from_="+16787265181",
+                                                        body="Hello")
+
         """User registration view."""
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
@@ -63,8 +76,38 @@ class FeedbackCreate(GenericAPIView):
             #     )
             # feedback.save()
             serializer.save()
+
+            # client = Client(account_sid, auth_token)
+
+            # body = str("Hello welcome to the feedback messaging service.")
+
+            # # str_response = body.decode('utf-8')
+            # # obj = json.loads(body)
+
+            # message = client.api.account.messages.create(to="+1" + serializer.data['student_cell_number'],
+            #                                     from_="+16787265181",
+            #                                     body=body)
+            try:
+                send_message(serializer.data['student_cell_number'])
+            except TypeError:
+                print("Sent, but type error")
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class FeedbackUpdate(GenericAPIView):
+    serializer_class = FeedbackUpdateSerializer
+    queryset = Feedback.objects.all()
+
+    def post(self, request):
+        serializer = FeedbackUpdateSerializer(request.data)
+        if serializer.is_valid():
+            feedback = Feedback.objects.filter(feedback_id=serializer.data['feedback_id'])
+            feedback[0].initial_comment = serializer.data['initial_comment']
+            feedback[0].student_rating = serializer.data['student_rating']
+            feedback[0].save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class FeedbackList(GenericAPIView):

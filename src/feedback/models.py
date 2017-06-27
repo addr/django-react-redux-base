@@ -31,8 +31,12 @@ class Feedback(models.Model):
     feedback_time_stamp = models.DateTimeField(default=timezone.now)
     feedback_status = models.CharField(default=False, max_length=20)
 
+    advisor_cell_number = models.CharField(default='5555555555', max_length=15)
+
     #add initial comment
     initial_comment = models.CharField(default='Initial Comment', max_length=500)
+
+    search_feedback_id = models.CharField(default='1', max_length=20)
 
 
 

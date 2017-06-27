@@ -59,3 +59,28 @@ class FeedbackListSerializer(serializers.ModelSerializer):
                     files=None, many=True, partial=False):
         return super(ViewName, self).get_serializer(instance, data, files,
                                                     many, partial)
+
+class FeedbackUpdateSerializer(serializers.ModelSerializer):
+    # email = serializers.EmailField()
+
+    class Meta:
+        model = Feedback
+        fields = ('search_feedback_id', 'student_rating', 'initial_comment')
+
+    def create(self, validated_data):
+        """
+        Create the object.
+
+        :param validated_data: string
+        """
+        # user = User.objects.create(**validated_data)
+        feedback = Feedback.objects.create(**validated_data)
+
+        feedback.save()
+
+        return feedback
+
+    def get_serializer(self, instance=None, data=None,
+                    files=None, many=True, partial=False):
+        return super(ViewName, self).get_serializer(instance, data, files,
+                                                    many, partial)
