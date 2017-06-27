@@ -28,12 +28,17 @@ from lib.utils import AtomicMixin
 
 from io import TextIOWrapper
 
+from twilio.rest import Client
+
 import json
 
 import csv
 
 # In forms.py...
 from django import forms
+
+account_sid = "AC326998e2f134ab17a5f17dbc38154b10"
+auth_token = "9b17270514b2f825f6c4e33186b43c57"
         
 class CommentCreate(GenericAPIView):
 
@@ -70,7 +75,7 @@ class CommentReply(GenericAPIView):
 
             message = client.api.account.messages.create(to=cell_number,
                                                         from_="+16787265181",
-                                                        body=body)
+                                                        body='Feedback ID Number :' + body + '\nhttp://ec2-54-85-202-169.compute-1.amazonaws.com/feedback/3/comments')
 
         print('Body' + request.data['Body'])
         print ('From ' + request.data['From'])
@@ -78,7 +83,7 @@ class CommentReply(GenericAPIView):
         from_ = request.data['From']
         body = request.data['Body']
         split_bod = body.split('\n')
-        feedback_id = split_bod[0]
+        feedback_id = split_bod[0].strip()
         comment = split_bod[1]
 
         feed = Feedback.objects.filter(feedback_id=feedback_id)
@@ -93,10 +98,10 @@ class CommentReply(GenericAPIView):
         if from_ == feed[0].student_cell_number:
             print('student')
             author_name = feed[0].student_name
-            send_message(from_, body)
+            send_message(feed[0].advisor_cell_number, body)
         else:
             author_name = feed[0].appointment_originator
-            send_message(from_, body)
+            send_message(feed[0].student_cell_number, body)
             print('advisor')
 
         comment = Comment(feedback_id=feedback_id, comment=comment, author_name=author_name)
