@@ -67,6 +67,7 @@ class CommentReply(GenericAPIView):
         print('Body' + request.data['Body'])
         print ('From ' + request.data['From'])
 
+        from_ = request.data['From']
         body = request.data['Body']
         split_bod = body.split('\n')
         feedback_id = split_bod[0]
@@ -80,6 +81,16 @@ class CommentReply(GenericAPIView):
         print (originator)
 
         print(feedback_id)
+
+        if from_ == feed[0].student_cell_number:
+            print('student')
+            author_name = feed[0].student_name
+        else:
+            author_name = feed[0].appointment_originator
+            print('advisor')
+
+        comment = Comment(feedback_id=feedback_id, comment=comment, author_name=author_name)
+        comment.save()
 
         return Response(status=status.HTTP_200_OK)
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
