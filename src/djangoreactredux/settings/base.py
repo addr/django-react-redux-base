@@ -28,7 +28,8 @@ INSTALLED_APPS = (
     'accounts',
     'base',
     'feedback',
-    'comments'
+    'comments',
+    'appointment'
 )
 
 MIDDLEWARE_CLASSES = (

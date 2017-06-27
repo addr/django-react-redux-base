@@ -20,7 +20,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 
 from feedback.models import Feedback
-from feedback.serializers import FeedbackSerializer, FeedbackListSerializer
+from feedback.serializers import FeedbackSerializer, FeedbackListSerializer, FeedbackUpdateSerializer
 
 from lib.utils import AtomicMixin
 
@@ -46,7 +46,7 @@ class FeedbackCreate(GenericAPIView):
     def get(self, request):
         feedback = Feedback.objects.all()
         serializer = FeedbackListSerializer(feedback, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(feedback, status=status.HTTP_200_OK)
 
     def post(self, request):
 
@@ -75,17 +75,6 @@ class FeedbackCreate(GenericAPIView):
                 initial_comment = serializer.data['initial_comment']
                 )
             feedback.save()
-
-            # client = Client(account_sid, auth_token)
-
-            # body = str("Hello welcome to the feedback messaging service.")
-
-            # # str_response = body.decode('utf-8')
-            # # obj = json.loads(body)
-
-            # message = client.api.account.messages.create(to="+1" + serializer.data['student_cell_number'],
-            #                                     from_="+16787265181",
-            #                                     body=body)
             try:
                 send_message(serializer.data['student_cell_number'])
             except TypeError:

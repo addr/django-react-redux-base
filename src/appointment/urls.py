@@ -1,18 +1,15 @@
 from django.conf.urls import url
 from django.utils.translation import ugettext_lazy as _
 
-import comments.views
+import appointment.views
 
 urlpatterns = [
     url(_(r'^/$'),
-        comments.views.CommentCreate.as_view(),
-        name='comment_create'),
-    url(_(r'^/(?P<feedback_id>[0-9]+)/$'),
-        comments.views.CommentLookup.as_view(),
-        name='comment_lookup'),
-    url(_(r'^/reply/'),
-        comments.views.CommentReply.as_view(),
-        name='reply_from_user'),
+        appointment.views.AppointmentCreate.as_view(),
+        name='appointment_create'),
+    # url(_(r'^/update/$'),
+        # feedback.views.FeedbackUpdate.as_view(),
+        # name='feedback_update'),
     # url(_(r'^/create/$'),
     #     relationships.views.RelationshipCreateFile.as_view(),
     #     name='relationship_create_file'),

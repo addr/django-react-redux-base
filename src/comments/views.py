@@ -56,6 +56,14 @@ class CommentLookup(GenericAPIView):
         comments = Comment.objects.filter(feedback_id=feedback_id)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class CommentReply(GenericAPIView):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+
+    def post(self, request):
+        print(request.data)
+        return Response(status=status.HTTP_200_OK)
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # class CommentList(GenericAPIView):
