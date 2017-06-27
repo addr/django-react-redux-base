@@ -33,6 +33,7 @@ class CommentView extends React.Component {
     static propTypes = {
         isFetching: React.PropTypes.bool.isRequired,
         data: React.PropTypes.array,
+        token: React.PropTypes.string,
         actions: React.PropTypes.shape({
             getComments: React.PropTypes.func.isRequired,
             postComment: React.PropTypes.func.isRequired
@@ -60,7 +61,7 @@ class CommentView extends React.Component {
             author_id: 1,
             author_name: 'John Q. Professor',
         }
-        this.props.actions.postComment(commentObject);
+        this.props.actions.postComment(commentObject, this.props.token);
     }
 
     onTextChange(e) {

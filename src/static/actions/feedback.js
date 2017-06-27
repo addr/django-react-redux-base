@@ -73,15 +73,16 @@ export function getFeedbacks() {
     };
 }
 
-export function postComment(comment) {
+export function postComment(comment, token) {
     return (dispatch) => {
         dispatch(commentPostRequest());
         return fetch(`${SERVER_URL}/api/v1/comments/`, {
             method: 'post',
             body: JSON.stringify(comment),
             headers: {
-                "Content-Type": 'application/json',
-                "Accept": 'application/json'
+                Authorization: `Token ${token}`,
+                Content-Type: 'application/json',
+                Accept: 'application/json'
             }
         })
         .then(checkHttpStatus)

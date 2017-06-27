@@ -46,6 +46,7 @@ class FeedbackView extends React.Component {
     static propTypes = {
         isFetching: React.PropTypes.bool.isRequired,
         data: React.PropTypes.array,
+        token: React.PropTypes.string,
         actions: React.PropTypes.shape({
             getFeedbacks: React.PropTypes.func.isRequired
         }).isRequired
