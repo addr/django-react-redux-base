@@ -98,10 +98,10 @@ class CommentReply(GenericAPIView):
         if from_ == feed[0].student_cell_number:
             print('student')
             author_name = feed[0].student_name
-            send_message(from_, body)
+            send_message(feed[0].advisor_cell_number, body)
         else:
             author_name = feed[0].appointment_originator
-            send_message(from_, body)
+            send_message(feed[0].student_cell_number, body)
             print('advisor')
 
         comment = Comment(feedback_id=feedback_id, comment=comment, author_name=author_name)
