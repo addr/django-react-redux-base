@@ -20,7 +20,8 @@ class FeedbackPrompt extends React.Component {
         this.state = {
             prompt: '',
             rating: 0,
-            comment: ''
+            comment: '',
+            status: ''
         };
 
         this.selectRating = this.selectRating.bind(this);
@@ -43,7 +44,8 @@ class FeedbackPrompt extends React.Component {
         const rating = {
             search_feedback_id: this.props.params.feedbackID,
             student_rating: this.state.rating,
-            initial_comment: this.state.comment
+            initial_comment: this.state.comment,
+            feedback_status: 'Awaiting Advisor'
         }
         this.props.actions.postFeedbackPrompt(rating);
     }
