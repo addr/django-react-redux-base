@@ -54,6 +54,14 @@ class CommentCreate(GenericAPIView):
         # print(request.user.email)
         user = User.objects.get(email=request.user.email)
         if serializer.is_valid():
+            feed = Feedback.objects.get(feedback_id=serializer.data['feedback_id'])
+            if user.is_superuser():
+                for f in feed:
+                    f.feedback_status = 'Awaiting student'
+            else:
+                for f in feed:
+                    f.feedback_status = 'Awaiting advisor'
+
             comment = Comment(feedback_id=serializer.data['feedback_id'], comment=serializer.data['comment'], author_name=user.first_name + ' ' + user.last_name)
             comment.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -102,10 +110,14 @@ class CommentReply(GenericAPIView):
 
         if from_ == feed[0].student_cell_number:
             print('student')
+            for f in feed:
+                f.feedback_status = 'Awaiting Advisor'
             author_name = feed[0].student_name
             send_message(feed[0].advisor_cell_number, body)
         else:
             author_name = feed[0].appointment_originator
+            for f in feed:
+                f.feedback_status = 'Awaiting Student'
             send_message(feed[0].student_cell_number, body)
             print('advisor')
 
