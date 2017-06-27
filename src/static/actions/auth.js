@@ -55,7 +55,7 @@ export function authLogoutAndRedirect() {
     };
 }
 
-export function authLoginUser(email, password, redirect = '/') {
+export function authLoginUser(email, password, redirect = '/feedback') {
     return (dispatch) => {
         dispatch(authLoginUserRequest());
         const auth = btoa(`${email}:${password}`);
