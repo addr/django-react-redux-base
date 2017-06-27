@@ -23,6 +23,7 @@ from comments.models import Comment
 from comments.serializers import CommentSerializer
 
 from feedback.models import Feedback
+from accounts.models import User
 
 from lib.utils import AtomicMixin
 
@@ -50,9 +51,10 @@ class CommentCreate(GenericAPIView):
     def post(self, request):
         """User registration view."""
         serializer = CommentSerializer(data=request.data)
-        print(request.user.username)
+        # print(request.user.email)
+        user = User.objects.get(email=request.user.email)
         if serializer.is_valid():
-            comment = Comment(feedback_id=serializer.data['feedback_id'], comment=serializer.data['comment'], author_id=serializer.data['author_id'], author_name=serializer.data['author_name'])
+            comment = Comment(feedback_id=serializer.data['feedback_id'], comment=serializer.data['comment'], author_name=user.first_name + ' ' + user.last_name)
             comment.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
