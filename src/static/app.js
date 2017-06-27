@@ -24,7 +24,7 @@ class App extends React.Component {
     };
 
     goToIndex = () => {
-        this.props.dispatch(push('/'));
+        this.props.dispatch(push('/feedback'));
     };
 
     goToProtected = () => {
