@@ -8,6 +8,7 @@ import * as actionCreators from '../../actions/feedback';
 class FeedbackPrompt extends React.Component {
     static propTypes = {
         isFetching: React.PropTypes.bool.isRequired,
+        token: React.PropTypes.string,
         data: React.PropTypes.array,
         actions: React.PropTypes.shape({
             getFeedbacks: React.PropTypes.func.isRequired,
