@@ -19,8 +19,8 @@ export default (
         <Route path="login" component={LoginView} />
         <Route path="/feedback" component={requireAuthentication(FeedbackView)} />
         <Route path="/feedback/:feedbackID/comments" component={requireAuthentication(CommentView)} />
-        <Route path="/feedback/:feedbackID/feedback-prompt" component={requireAuthentication(FeedbackPrompt)} />
-        <Route path="/feedback/:feedbackID/thank-you" component={requireAuthentication(ThankYouView)} />
+        <Route path="/feedback/:feedbackID/feedback-prompt" component={FeedbackPrompt} />
+        <Route path="/feedback/:feedbackID/thank-you" component={ThankYouView} />
         <Route path="*" component={NotFoundView} />
     </Route>
 )
