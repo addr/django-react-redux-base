@@ -50,47 +50,27 @@ class FeedbackCreate(GenericAPIView):
 
     def post(self, request):
 
-        def send_message(student_cell_number):
+        def send_message(student_cell_number, feedback_id):
             client = Client(account_sid, auth_token)
+
+            body = "\nHey thanks for attending your appointment. We would love to receive some feedback about your appointment. You can visit the link below.\n\n http://ec2-54-152-192-141.compute-1.amazonaws.com/feedback/" + str(feedback_id) +"/feedback-prompt"
 
             message = client.api.account.messages.create(to=student_cell_number,
                                                         from_="+16787265181",
-                                                        body="Hello")
+                                                        body="Feedback ID Number : " + str(feedback_id) + body)
 
         """User registration view."""
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
-            # feedback = Feedback(
-            #     student_identifier = serializer.data['student_identifier'],
-            #     student_name = serializer.data['student_name'],
-            #     event = serializer.data['event'],
-            #     reason = serializer.data['reason'],
-            #     event_end = serializer.data['event_end'],
-            #     event_start = serializer.data['event_start'],
-            #     appointment_originator = serializer.data['appointment_originator'],
-            #     student_cell_number = serializer.data['student_cell_number'],
-            #     feedback_prompt = serializer.data['feedback_prompt'],
-            #     student_rating = serializer.data['student_rating'],
-            #     feedback_status = serializer.data['feedback_status'],
-            #     initial_comment = serializer.data['initial_comment']
-            #     )
-            # feedback.save()
             serializer.save()
+            feedback = Feedback.objects.latest('feedback_id')
+            print(feedback)
+            # try:
+            send_message(serializer.data['student_cell_number'], feedback.feedback_id)
+            # except TypeError as e:
+                # print("Sent, but type error")
+                # print(e)
 
-            # client = Client(account_sid, auth_token)
-
-            # body = str("Hello welcome to the feedback messaging service.")
-
-            # # str_response = body.decode('utf-8')
-            # # obj = json.loads(body)
-
-            # message = client.api.account.messages.create(to="+1" + serializer.data['student_cell_number'],
-            #                                     from_="+16787265181",
-            #                                     body=body)
-            try:
-                send_message(serializer.data['student_cell_number'])
-            except TypeError:
-                print("Sent, but type error")
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
