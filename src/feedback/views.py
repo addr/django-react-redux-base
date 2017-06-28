@@ -57,7 +57,7 @@ class FeedbackCreate(GenericAPIView):
 
             message = client.api.account.messages.create(to=student_cell_number,
                                                         from_="+16787265181",
-                                                        body="Feedback ID Number : " + feedback_id + body)
+                                                        body="Hello")
 
         """User registration view."""
         serializer = FeedbackSerializer(data=request.data)
