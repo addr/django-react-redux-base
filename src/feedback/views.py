@@ -55,7 +55,7 @@ class FeedbackCreate(GenericAPIView):
 
             body = {
             "\nHey thanks for attending your appointment. We would love to receive some feedback about your appointment. You can visit the link below." +
-            "\n\n http://ec2-54-152-192-141.compute-1.amazonaws.com/feedback/" + feedback_id +'/feedback-prompt'
+            "\n\n http://ec2-54-152-192-141.compute-1.amazonaws.com/feedback/" + feedback_id +"/feedback-prompt"
             }
 
             message = client.api.account.messages.create(to=student_cell_number,
