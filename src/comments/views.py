@@ -83,14 +83,14 @@ class CommentReply(GenericAPIView):
 
     def post(self, request):
 
-        def send_message(cell_number, body, feedback_id):
+        def send_message(cell_number, body2, feedback_id):
             client = Client(account_sid, auth_token)
 
             body = "One of your advisors has left you some feedback. You may visit the webpage or you can reply to this message including your Feedback ID Number. \n http://ec2-52-90-101-97.compute-1.amazonaws.com/feedback/" + str(feedback_id) + "/comments\n"
 
             message = client.api.account.messages.create(to=cell_number,
                                                         from_="+16787265181",
-                                                        body='Feedback ID Number : ' + body )
+                                                        body='Feedback ID Number : ' + body + '\n' + body2)
 
         print('Body' + request.data['Body'])
         print ('From ' + request.data['From'])
