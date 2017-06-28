@@ -62,7 +62,7 @@ class FeedbackCreate(GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             feedback = Feedback.get(serializer.data)
-            print feedback
+            print(feedback)
             try:
                 send_message(serializer.data['student_cell_number'])
             except TypeError:
