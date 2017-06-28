@@ -41,7 +41,6 @@ class App extends React.Component {
         const loginClass = classNames({
             active: this.props.pathName === '/login'
         });
-
         return (
             <div>
                 <Menu>
@@ -62,77 +61,77 @@ class App extends React.Component {
                         Logout
                     </Menu.Item>
                 </Menu>
-                    <Container text-align='center'>
+                <Container text-align='center'>
                     <div>
                         {this.props.children}
                     </div>
                 </Container>
             </div>
-                    )
-        // return (
-        //     <div className="app">
-        //         <nav className="navbar navbar-default">
-        //             <div className="container-fluid">
-        //                 <div className="navbar-header">
-        //                     <button type="button"
-        //                             className="navbar-toggle collapsed"
-        //                             data-toggle="collapse"
-        //                             data-target="#top-navbar"
-        //                             aria-expanded="false"
-        //                     >
-        //                         <span className="sr-only">Toggle navigation</span>
-        //                         <span className="icon-bar" />
-        //                         <span className="icon-bar" />
-        //                         <span className="icon-bar" />
-        //                     </button>
-        //                     <a className="navbar-brand" tabIndex="0" onClick={this.goToIndex}>
-        //                         Django React Redux Demo
-        //                     </a>
-        //                 </div>
-        //                 <div className="collapse navbar-collapse" id="top-navbar">
-        //                     {this.props.isAuthenticated ?
-        //                         <ul className="nav navbar-nav navbar-right">
-        //                             <li className={homeClass}>
-        //                                 <a className="js-go-to-index-button" tabIndex="0" onClick={this.goToIndex}>
-        //                                     <i className="fa fa-home" /> Home
-        //                                 </a>
-        //                             </li>
-        //                             <li className={protectedClass}>
-        //                                 <a className="js-go-to-protected-button"
-        //                                    tabIndex="0"
-        //                                    onClick={this.goToProtected}
-        //                                 >
-        //                                     <i className="fa fa-lock" /> Protected
-        //                                 </a>
-        //                             </li>
-        //                             <li>
-        //                                 <a className="js-logout-button" tabIndex="0" onClick={this.logout}>
-        //                                     Logout
-        //                                 </a>
-        //                             </li>
-        //                         </ul>
-        //                         :
-        //                         <ul className="nav navbar-nav navbar-right">
-        //                             <li className={homeClass}>
-        //                                 <a className="js-go-to-index-button" tabIndex="0" onClick={this.goToIndex}>
-        //                                     <i className="fa fa-home" /> Home
-        //                                 </a>
-        //                             </li>
-        //                             <li className={loginClass}>
-        //                                 <Link className="js-login-button" to="/login">Login</Link>
-        //                             </li>
-        //                         </ul>
-        //                     }
-        //                 </div>
-        //             </div>
-        //         </nav>
-        //
-        //         <div>
-        //             {this.props.children}
-        //         </div>
-        //     </div>
-        // );
-    }
+        )
+// return (
+//     <div className="app">
+//         <nav className="navbar navbar-default">
+//             <div className="container-fluid">
+//                 <div className="navbar-header">
+//                     <button type="button"
+//                             className="navbar-toggle collapsed"
+//                             data-toggle="collapse"
+//                             data-target="#top-navbar"
+//                             aria-expanded="false"
+//                     >
+//                         <span className="sr-only">Toggle navigation</span>
+//                         <span className="icon-bar" />
+//                         <span className="icon-bar" />
+//                         <span className="icon-bar" />
+//                     </button>
+//                     <a className="navbar-brand" tabIndex="0" onClick={this.goToIndex}>
+//                         Django React Redux Demo
+//                     </a>
+//                 </div>
+//                 <div className="collapse navbar-collapse" id="top-navbar">
+//                     {this.props.isAuthenticated ?
+//                         <ul className="nav navbar-nav navbar-right">
+//                             <li className={homeClass}>
+//                                 <a className="js-go-to-index-button" tabIndex="0" onClick={this.goToIndex}>
+//                                     <i className="fa fa-home" /> Home
+//                                 </a>
+//                             </li>
+//                             <li className={protectedClass}>
+//                                 <a className="js-go-to-protected-button"
+//                                    tabIndex="0"
+//                                    onClick={this.goToProtected}
+//                                 >
+//                                     <i className="fa fa-lock" /> Protected
+//                                 </a>
+//                             </li>
+//                             <li>
+//                                 <a className="js-logout-button" tabIndex="0" onClick={this.logout}>
+//                                     Logout
+//                                 </a>
+//                             </li>
+//                         </ul>
+//                         :
+//                         <ul className="nav navbar-nav navbar-right">
+//                             <li className={homeClass}>
+//                                 <a className="js-go-to-index-button" tabIndex="0" onClick={this.goToIndex}>
+//                                     <i className="fa fa-home" /> Home
+//                                 </a>
+//                             </li>
+//                             <li className={loginClass}>
+//                                 <Link className="js-login-button" to="/login">Login</Link>
+//                             </li>
+//                         </ul>
+//                     }
+//                 </div>
+//             </div>
+//         </nav>
+//
+//         <div>
+//             {this.props.children}
+//         </div>
+//     </div>
+// );
+}
 }
 
 const mapStateToProps = (state, ownProps) => {
