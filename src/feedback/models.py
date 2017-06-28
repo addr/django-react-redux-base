@@ -29,7 +29,7 @@ class Feedback(models.Model):
     
     student_rating = models.CharField(default='0', max_length=5)
     feedback_time_stamp = models.DateTimeField(default=timezone.now)
-    feedback_status = models.CharField(default=False, max_length=20)
+    feedback_status = models.CharField(default='New', max_length=20)
 
     advisor_cell_number = models.CharField(default='5555555555', max_length=15)
 
