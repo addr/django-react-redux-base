@@ -88,7 +88,7 @@ class CommentReply(GenericAPIView):
 
             message = client.api.account.messages.create(to=cell_number,
                                                         from_="+16787265181",
-                                                        body='Feedback ID Number :' + body + '\nhttp://ec2-54-85-202-169.compute-1.amazonaws.com/feedback/3/comments')
+                                                        body='Feedback ID Number : ' + body + '\nhttp://ec2-54-85-202-169.compute-1.amazonaws.com/feedback/3/comments')
 
         print('Body' + request.data['Body'])
         print ('From ' + request.data['From'])
