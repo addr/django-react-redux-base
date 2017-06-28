@@ -61,7 +61,7 @@ class FeedbackPrompt extends React.Component {
         super(props);
         this.state = {
             prompt: '',
-            rating: 0,
+            rating: 2,
             comment: '',
             status: ''
         };
@@ -70,6 +70,7 @@ class FeedbackPrompt extends React.Component {
         this.submitRating = this.submitRating.bind(this);
         this.onCommentChange = this.onCommentChange.bind(this);
         this.onSmileClick = this.onSmileClick.bind(this);
+        this.getImageSource = this.getImageSource.bind(this);
     }
 
     selectRating(e, { value }) {
@@ -80,6 +81,7 @@ class FeedbackPrompt extends React.Component {
     onSmileClick(rating) {
         console.log(`Clicked rating ${rating}`);
         this.setState({ rating: rating });
+        this.forceUpdate();
     }
 
     onCommentChange(e) {
@@ -98,6 +100,31 @@ class FeedbackPrompt extends React.Component {
         this.props.actions.postFeedbackPrompt(rating);
     }
 
+    getImageSource(button) {
+        let { rating } = this.state;
+        let returnSrc = okayNotSelected.default;
+        switch (button) {
+            case 'veryGood': rating == 4 ? returnSrc = veryGoodSelected.default : returnSrc = veryGoodNotSelected.default;
+            break;
+            case 'good':
+            rating == 3 ? returnSrc = goodSelected.default : returnSrc = goodNotSelected.default;
+            break;
+            case 'ok':
+            rating == 2 ? returnSrc = okaySelected.default : returnSrc = okayNotSelected.default;
+            break;
+            case 'poor':
+            rating == 1 ? returnSrc = poorSelected.default : returnSrc = poorNotSelected.default;
+            break;
+            case 'veryPoor':
+            rating == 0 ? returnSrc = veryPoorSelected.default : returnSrc = veryPoorNotSelected.default;
+            break;
+            default:
+            returnSrc = okayNotSelected.default;
+            break;
+        }
+        return returnSrc;
+    }
+
     componentWillMount() {
         this.props.actions.getFeedbacks();
     }
@@ -112,7 +139,11 @@ class FeedbackPrompt extends React.Component {
     }
 
     render() {
-        const { rating } = this.state;
+        let veryGood = this.getImageSource('veryGood');
+        let good = this.getImageSource('good');
+        let ok = this.getImageSource('ok');
+        let poor = this.getImageSource('poor');
+        let veryPoor = this.getImageSource('veryPoor');
         return (
             <Container text textAlign='center'>
                 <Header as='h2'>
@@ -128,11 +159,11 @@ class FeedbackPrompt extends React.Component {
                         placeholder='Example: "Thank you for the advising help!"'
                         onChange={this.onCommentChange}/>
                     <Image.Group size='mini'>
-                        <Image src={veryGoodNotSelected.default} onClick={() => { this.onSmileClick(0)}} size='mini' inline='true' centered spaced />
-                        <Image src={goodNotSelected.default} onClick={() => { this.onSmileClick(1)}} size='mini' inline='true' centered spaced />
-                        <Image src={okayNotSelected.default} onClick={() => { this.onSmileClick(2)}} size='mini' inline='true' centered spaced />
-                        <Image src={poorNotSelected.default} onClick={() => { this.onSmileClick(3)}} size='mini' inline='true' centered spaced />
-                        <Image src={veryPoorNotSelected.default} onClick={() => { this.onSmileClick(4)}} size='mini' inline='true' centered spaced />
+                        <Image src={veryGood} onClick={() => { this.onSmileClick(4)}} size='mini' inline='true' centered spaced />
+                        <Image src={good} onClick={() => { this.onSmileClick(3)}} size='mini' inline='true' centered spaced />
+                        <Image src={ok} onClick={() => { this.onSmileClick(2)}} size='mini' inline='true' centered spaced />
+                        <Image src={poor} onClick={() => { this.onSmileClick(1)}} size='mini' inline='true' centered spaced />
+                        <Image src={veryPoor} onClick={() => { this.onSmileClick(0)}} size='mini' inline='true' centered spaced />
                     </Image.Group>
                     <p></p>
                     <Form.Button
