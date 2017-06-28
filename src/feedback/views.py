@@ -68,11 +68,11 @@ class FeedbackCreate(GenericAPIView):
             serializer.save()
             feedback = Feedback.objects.latest('feedback_id')
             print(feedback)
-            try:
-                send_message(serializer.data['student_cell_number'], feedback.feedback_id)
-            except TypeError as e:
-                print("Sent, but type error")
-                print(str(e))
+            # try:
+            send_message(serializer.data['student_cell_number'], feedback.feedback_id)
+            # except TypeError as e:
+                # print("Sent, but type error")
+                # print(e)
 
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
