@@ -61,7 +61,7 @@ class FeedbackCreate(GenericAPIView):
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            feedback = Feedback.objects.get(serializer.data)
+            feedback = Feedback.objects.latest('feedback_id')
             print(feedback)
             try:
                 send_message(serializer.data['student_cell_number'])
