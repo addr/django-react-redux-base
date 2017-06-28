@@ -83,12 +83,14 @@ class CommentReply(GenericAPIView):
 
     def post(self, request):
 
-        def send_message(cell_number, body):
+        def send_message(cell_number, body, feedback_id):
             client = Client(account_sid, auth_token)
+
+            body = "One of your advisors has left you some feedback. You may visit the webpage or you can reply to this message including your Feedback ID Number. \n http://ec2-52-90-101-97.compute-1.amazonaws.com/feedback/" + str(feedback_id) + "/comments\n"
 
             message = client.api.account.messages.create(to=cell_number,
                                                         from_="+16787265181",
-                                                        body='Feedback ID Number : ' + body + '\nhttp://ec2-54-85-202-169.compute-1.amazonaws.com/feedback/3/comments')
+                                                        body='Feedback ID Number : ' + body )
 
         print('Body' + request.data['Body'])
         print ('From ' + request.data['From'])
@@ -96,7 +98,7 @@ class CommentReply(GenericAPIView):
         from_ = request.data['From']
         body = request.data['Body']
         split_bod = body.split('\n')
-        feedback_id = split_bod[0].trim()
+        feedback_id = split_bod[0]
         comment = split_bod[1]
 
         feed = Feedback.objects.filter(feedback_id=feedback_id)
@@ -113,12 +115,12 @@ class CommentReply(GenericAPIView):
             for f in feed:
                 f.feedback_status = 'Awaiting Advisor'
             author_name = feed[0].student_name
-            send_message(feed[0].advisor_cell_number, body)
+            send_message(feed[0].advisor_cell_number, body, feedback_id)
         else:
             author_name = feed[0].appointment_originator
             for f in feed:
                 f.feedback_status = 'Awaiting Student'
-            send_message(feed[0].student_cell_number, body)
+            send_message(feed[0].student_cell_number, body, feedback_id)
             print('advisor')
 
         comment = Comment(feedback_id=feedback_id, comment=comment, author_name=author_name)

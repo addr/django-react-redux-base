@@ -53,7 +53,7 @@ class FeedbackCreate(GenericAPIView):
         def send_message(student_cell_number, feedback_id):
             client = Client(account_sid, auth_token)
 
-            body = "\nHey thanks for attending your appointment. We would love to receive some feedback about your appointment. You can visit the link below.\n\n http://ec2-54-152-192-141.compute-1.amazonaws.com/feedback/" + str(feedback_id) +"/feedback-prompt"
+            body = "\nHey thanks for attending your appointment. We would love to receive some feedback about your appointment. You can visit the link below.\n\n http://ec2-52-90-101-97.compute-1.amazonaws.com/feedback/" + str(feedback_id) +"/feedback-prompt"
 
             message = client.api.account.messages.create(to=student_cell_number,
                                                         from_="+16787265181",
@@ -84,7 +84,7 @@ class FeedbackUpdate(GenericAPIView):
         def send_message(cell_number, feedback_id):
             client = Client(account_sid, auth_token)
 
-            body = "One of your students have left you some feedback. You may visit the webpage or you can reply to this message including your Feedback ID Number. \n http://ec2-54-152-192-141.compute-1.amazonaws.com/feedback/" + str(feedback_id) + "/comments\n"
+            body = "One of your students has left you some feedback. You may visit the webpage or you can reply to this message including your Feedback ID Number. \n http://ec2-52-90-101-97.compute-1.amazonaws.com/feedback/" + str(feedback_id) + "/comments\n"
 
             message = client.api.account.messages.create(to=cell_number,
                                                         from_="+16787265181",
