@@ -5,7 +5,34 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../../actions/feedback';
 import { Segment, Label, Header, Container, Card, Icon, Image, Button, Rating } from 'semantic-ui-react'
 
+import * as veryGoodDefault from '../../images/smile/Very Good Default.png';
+import * as goodDefault from '../../images/smile/Good Default.png';
+import * as okayDefault from '../../images/smile/Okay Default.png';
+import * as poorDefault from '../../images/smile/Poor Default.png';
+import * as veryPoorDefault from '../../images/smile/Very Poor Default.png';
+
 const FeedbackCard = ({title, date, comment, student_name, rating, feedback_id, status, ...props}) =>  {
+    let returnSrc = veryGoodDefault.default;
+    switch (rating) {
+        case 4:
+        returnSrc = veryGoodDefault.default;
+        break;
+        case 3:
+        returnSrc = goodDefault.default;
+        break;
+        case 2:
+        returnSrc = okayDefault.default;
+        break;
+        case 1:
+        returnSrc = poorDefault.default;
+        break;
+        case 0:
+        returnSrc = veryPoorDefault.default;
+        break;
+        default:
+        returnSrc = okayDefault.default;
+        break;
+    }
     return (
         <Card fluid>
                 <Card.Content>
@@ -22,8 +49,9 @@ const FeedbackCard = ({title, date, comment, student_name, rating, feedback_id, 
                         :
                             'Awaiting student feedback...'
                         }
+                        <p></p>
                         <div>
-                            <Rating icon='star' defaultRating={1} maxRating={5}  />
+                            <Image src={returnSrc} size='mini' centered />
                         </div>
                     </Card.Description>
                 </Card.Content>
@@ -66,7 +94,9 @@ class FeedbackView extends React.Component {
                     student_name={feedback.student_name}
                     feedback_id={feedback.feedback_id}
                     comment={feedback.initial_comment}
-                    status={feedback.feedback_status} />
+                    status={feedback.feedback_status}
+                    rating={feedback.student_rating}
+                />
             ))
         }
         return (
