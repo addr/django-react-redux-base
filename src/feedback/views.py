@@ -81,18 +81,18 @@ class FeedbackUpdate(GenericAPIView):
 
     def post(self, request):
 
-        def send_message(student_cell_number, feedback_id):
+        def send_message(cell_number, feedback_id):
             client = Client(account_sid, auth_token)
 
             body = "One of your students have left you some feedback. You may visit the webpage or you can reply to this message including your Feedback ID Number. \n http://ec2-54-152-192-141.compute-1.amazonaws.com/feedback/" + str(feedback_id) + "/comments\n"
 
             message = client.api.account.messages.create(to=student_cell_number,
                                                         from_="+16787265181",
-                                                        body="Feedback ID Number : " + str(feedback_id) + body)
+                                                        body="Feedback ID Number : " + str(feedback_id) +"\n" + body)
         serializer = FeedbackUpdateSerializer(data=request.data)
         if serializer.is_valid():
             feedback = Feedback.objects.filter(feedback_id=serializer.data['search_feedback_id'])
-            send_message(feedback[0].student_cell_number, feedback[0].feedback_id)
+            send_message(feedback[0].advisor_cell_number, feedback[0].feedback_id)
             # print(feedback[0])
             # print(serializer.data['initial_comment'])
             # print(serializer.data['student_rating'])
