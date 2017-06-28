@@ -51,6 +51,16 @@ class CommentCreate(GenericAPIView):
     def post(self, request):
         """User registration view."""
         serializer = CommentSerializer(data=request.data)
+
+        def send_message(cell_number, body, feedback_id):
+            client = Client(account_sid, auth_token)
+
+            # body = "One of your advisors has left you some feedback. You may visit the webpage or you can reply to this message including your Feedback ID Number. \n http://ec2-52-90-101-97.compute-1.amazonaws.com/feedback/" + str(feedback_id) + "/comments\n"
+
+            message = client.api.account.messages.create(to=cell_number,
+                                                        from_="+16787265181",
+                                                        body='Feedback ID Number : ' + feedback_id + '\n' + body )
+
         # print(request.user.email)
         user = User.objects.get(email=request.user.email)
         if serializer.is_valid():
@@ -58,9 +68,11 @@ class CommentCreate(GenericAPIView):
             if user.is_superuser:
                 feed.feedback_status = 'Awaiting student'
                 feed.save()
+                send_message(feed.student_cell_number, serializer.data['comment'], feed.feedback_id)
             else:
                 feed.feedback_status = 'Awaiting advisor'
                 feed.save()
+                send_message(feed.advisor_cell_number, serializer.data['comment'], feed.feedback_id)
 
             comment = Comment(feedback_id=serializer.data['feedback_id'], comment=serializer.data['comment'], author_name=user.first_name + ' ' + user.last_name)
             comment.save()
