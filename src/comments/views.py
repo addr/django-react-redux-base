@@ -57,8 +57,10 @@ class CommentCreate(GenericAPIView):
             feed = Feedback.objects.get(feedback_id=serializer.data['feedback_id'])
             if user.is_superuser:
                 feed.feedback_status = 'Awaiting student'
+                feed.save()
             else:
                 feed.feedback_status = 'Awaiting advisor'
+                feed.save()
 
             comment = Comment(feedback_id=serializer.data['feedback_id'], comment=serializer.data['comment'], author_name=user.first_name + ' ' + user.last_name)
             comment.save()
