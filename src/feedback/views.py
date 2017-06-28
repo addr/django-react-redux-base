@@ -86,7 +86,7 @@ class FeedbackUpdate(GenericAPIView):
 
             body = "One of your students have left you some feedback. You may visit the webpage or you can reply to this message including your Feedback ID Number. \n http://ec2-54-152-192-141.compute-1.amazonaws.com/feedback/" + str(feedback_id) + "/comments\n"
 
-            message = client.api.account.messages.create(to=student_cell_number,
+            message = client.api.account.messages.create(to=cell_number,
                                                         from_="+16787265181",
                                                         body="Feedback ID Number : " + str(feedback_id) +"\n" + body)
         serializer = FeedbackUpdateSerializer(data=request.data)
