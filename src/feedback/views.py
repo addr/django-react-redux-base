@@ -50,7 +50,7 @@ class FeedbackCreate(GenericAPIView):
 
     def post(self, request):
 
-        def send_message(student_cell_number):
+        def send_message(student_cell_number, feedback_id):
             client = Client(account_sid, auth_token)
 
             message = client.api.account.messages.create(to=student_cell_number,
@@ -60,33 +60,9 @@ class FeedbackCreate(GenericAPIView):
         """User registration view."""
         serializer = FeedbackSerializer(data=request.data)
         if serializer.is_valid():
-            # feedback = Feedback(
-            #     student_identifier = serializer.data['student_identifier'],
-            #     student_name = serializer.data['student_name'],
-            #     event = serializer.data['event'],
-            #     reason = serializer.data['reason'],
-            #     event_end = serializer.data['event_end'],
-            #     event_start = serializer.data['event_start'],
-            #     appointment_originator = serializer.data['appointment_originator'],
-            #     student_cell_number = serializer.data['student_cell_number'],
-            #     feedback_prompt = serializer.data['feedback_prompt'],
-            #     student_rating = serializer.data['student_rating'],
-            #     feedback_status = serializer.data['feedback_status'],
-            #     initial_comment = serializer.data['initial_comment']
-            #     )
-            # feedback.save()
             serializer.save()
-
-            # client = Client(account_sid, auth_token)
-
-            # body = str("Hello welcome to the feedback messaging service.")
-
-            # # str_response = body.decode('utf-8')
-            # # obj = json.loads(body)
-
-            # message = client.api.account.messages.create(to="+1" + serializer.data['student_cell_number'],
-            #                                     from_="+16787265181",
-            #                                     body=body)
+            feedback = Feedback.get(serializer.data)
+            print feedback
             try:
                 send_message(serializer.data['student_cell_number'])
             except TypeError:
